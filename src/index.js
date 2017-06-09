@@ -218,13 +218,16 @@ export default class MGesture {
     switchOperator(el){
         el = typeof el == 'string'? document.querySelector(el):el;
         // 转换操作元素后，也需要重置 mtouch 中的单指缩放基本点 singleBasePoint;
-        this.mtouch.switchOperator(el);
+        this.mtouch && this.mtouch.switchOperator(el);
         this.operator = el;
-        this.freeze(false);
         return this;
     }
     freeze(freeze){
         this.freezed = freeze ? true:false;
         return this;
+    }
+    destory(){
+        this.mtouch && this.mtouch.destroy();
+        this.mtouch = null;
     }
 }

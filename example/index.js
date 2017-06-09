@@ -34,7 +34,7 @@ $('.js-img').on('load',()=>{
 $('.js-el').on('click', function(e) {
     $('.js-el').removeClass('active');
     $(this).addClass('active');
-    mgestureSticker.switchOperator(this);
+    mgestureSticker.switchOperator(this).freeze(false);
     e.stopPropagation();
 });
 

@@ -1,6 +1,6 @@
 var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
+var _typeof$1 = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
     return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 } : function (obj) {
     return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
@@ -8,14 +8,14 @@ var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "sym
 
 var _ = {
     getLength: function getLength(v1) {
-        if ((typeof v1 === 'undefined' ? 'undefined' : _typeof(v1)) !== 'object') {
+        if ((typeof v1 === 'undefined' ? 'undefined' : _typeof$1(v1)) !== 'object') {
             console.error('getLength error!');
             return;
         }
         return Math.sqrt(v1.x * v1.x + v1.y * v1.y);
     },
     getAngle: function getAngle(v1, v2) {
-        if ((typeof v1 === 'undefined' ? 'undefined' : _typeof(v1)) !== 'object' || (typeof v2 === 'undefined' ? 'undefined' : _typeof(v2)) !== 'object') {
+        if ((typeof v1 === 'undefined' ? 'undefined' : _typeof$1(v1)) !== 'object' || (typeof v2 === 'undefined' ? 'undefined' : _typeof$1(v2)) !== 'object') {
             console.error('getAngle error!');
             return;
         }
@@ -42,33 +42,34 @@ var _ = {
             y = offset.top + el.getBoundingClientRect().width / 2;
         return { x: Math.round(x), y: Math.round(y) };
     },
-    setPos: function setPos(el, transform) {
-        var str = JSON.stringify(transform);
-        var value = 'translate3d(' + transform.x + 'px,' + transform.y + 'px,0px) scale(' + transform.scale + ') rotate(' + transform.rotate + 'deg)';
-        el = typeof el == 'string' ? document.querySelector(el) : el;
-        el.style.transform = value;
-        el.setAttribute('data-mtouch-status', str);
-    },
-    getPos: function getPos(el) {
-        var defaulTrans = void 0;
-        var cssTrans = window.getComputedStyle(el, null).transform;
-        if (window.getComputedStyle && cssTrans !== 'none') {
-            defaulTrans = this.matrixTo(cssTrans);
-        } else {
-            defaulTrans = {
-                x: 0,
-                y: 0,
-                scale: 1,
-                rotate: 0
-            };
-        }
-        return JSON.parse(el.getAttribute('data-mtouch-status')) || defaulTrans;
-    },
+
+    // setPos(el, transform) {
+    //     let str = JSON.stringify(transform);
+    //     let value = `translate3d(${transform.x}px,${transform.y}px,0px) scale(${transform.scale}) rotate(${transform.rotate}deg)`;
+    //     el = typeof el == 'string'? document.querySelector(el): el;
+    //     el.style.transform = value;
+    //     el.setAttribute('data-mtouch-status', str);
+    // },
+    // getPos(el) {
+    //     let defaulTrans;
+    //     let cssTrans = window.getComputedStyle(el,null).transform;
+    //     if(window.getComputedStyle && cssTrans !== 'none'){
+    //         defaulTrans = this.matrixTo(cssTrans);
+    //     }else{
+    //         defaulTrans = {
+    //             x: 0,
+    //             y: 0,
+    //             scale: 1,
+    //             rotate: 0,
+    //         };
+    //     }
+    //     return JSON.parse(el.getAttribute('data-mtouch-status')) || defaulTrans;
+    // },
     extend: function extend(obj1, obj2) {
         for (var k in obj2) {
             if (obj2.hasOwnProperty(k)) {
-                if (_typeof(obj2[k]) == 'object') {
-                    if (_typeof(obj1[k]) !== 'object') {
+                if (_typeof$1(obj2[k]) == 'object') {
+                    if (_typeof$1(obj1[k]) !== 'object') {
                         obj1[k] = {};
                     }
                     this.extend(obj1[k], obj2[k]);
@@ -80,7 +81,7 @@ var _ = {
         return obj1;
     },
     getVector: function getVector(p1, p2) {
-        if ((typeof p1 === 'undefined' ? 'undefined' : _typeof(p1)) !== 'object' || (typeof p2 === 'undefined' ? 'undefined' : _typeof(p2)) !== 'object') {
+        if ((typeof p1 === 'undefined' ? 'undefined' : _typeof$1(p1)) !== 'object' || (typeof p2 === 'undefined' ? 'undefined' : _typeof$1(p2)) !== 'object') {
             console.error('getvector error!');
             return;
         }
@@ -124,6 +125,12 @@ var _ = {
             rotate: rotate
         };
         return trans;
+    },
+    getUseName: function getUseName(evName) {
+        var useName = evName.replace('start', '');
+        var end = useName.indexOf('rotate') !== -1 ? 'nd' : 'end';
+        useName = useName.replace(end, '');
+        return useName;
     }
 };
 
@@ -190,358 +197,343 @@ var HandlerBus = function () {
     return HandlerBus;
 }();
 
-var _createClass$1$1 = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
-
-function _classCallCheck$1$1(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
+    return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+} : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+};
 
 var EVENT = ['touchstart', 'touchmove', 'touchend', 'drag', 'dragstart', 'dragend', 'pinch', 'pinchstart', 'pinchend', 'rotate', 'rotatestart', 'rotatend'];
 
-var MTouch = function () {
-    function MTouch(options) {
-        _classCallCheck$1$1(this, MTouch);
+var ORIGINEVENT = ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
 
-        this.ops = {
-            // config:
-            receiver: null,
-            operator: null,
+function MTouch(config, operator) {
 
-            // event
-            touchstart: function touchstart() {},
-            touchmove: function touchmove() {},
-            touchend: function touchend() {},
-            drag: function drag() {},
-            dragstart: function dragstart() {},
-            dragend: function dragend() {},
-            pinch: function pinch() {},
-            pinchstart: function pinchstart() {},
-            pinchend: function pinchend() {},
-            rotate: function rotate() {},
-            rotatestart: function rotatestart() {},
-            rotatend: function rotatend() {},
+    // 兼容不使用 new 的方式；
+    if (!(this instanceof MTouch)) return new MTouch(config, operator);
 
-            singlePinch: {
-                start: function start() {},
-                pinch: function pinch() {},
-                end: function end() {},
-
-                buttonId: null
-            },
-
-            singleRotate: {
-                start: function start() {},
-                rotate: function rotate() {},
-                end: function end() {},
-
-                buttonId: null
-            }
-        };
-
-        // 开关；
-        this.use = {
-            drag: !!options.drag || !!options.dragstart || !!options.dragend,
-            pinch: !!options.pinch || !!options.pinchstart || !!options.pinchend,
-            rotate: !!options.rotate || !!options.rotatestart || !!options.rotateend,
-            singlePinch: !!options.singlePinch && !!options.singlePinch.buttonId,
-            singleRotate: !!options.singleRotate && !!options.singleRotate.buttonId
-        };
-
-        this.ops = _.extend(this.ops, options);
-
-        // receiver test;
-        if (!this.ops.receiver || typeof this.ops.receiver !== 'string') {
-            console.error('receiver error,there must be a receiver-selector');
-            return;
+    // options 多态；
+    var options = void 0;
+    if (typeof config === 'string') {
+        options = {};
+        options.receiver = config;
+        if (operator) {
+            options.operator = operator;
         }
-        // 事件接收器；
-        this.receiver = document.querySelector(this.ops.receiver);
-
-        // 事件操纵器；
-        if (this.ops.operator) {
-            if (typeof this.ops.operator !== 'string') {
-                console.error('operator error, the operator param must be a selector');
-                return;
-            }
-            this.operator = document.querySelector(this.ops.operator);
-        } else {
-            this.operator = this.receiver;
-        }
-
-        // touch状态；
-        this.fingers = 0;
-        // 初始状态;
-        this.draging = this.pinching = this.rotating = this.singleRotating = this.singlePinching = false;
-
-        this.startScale = 1;
-        this.startPoint = {};
-        this.secondPoint = {};
-        this.pinchStartLength = null;
-        this.singlePinchStartLength = null;
-        this.vector1 = {};
-        this.singleBasePoint = {};
-        // eventbus
-        this.driveBus();
-        this.bind();
+    } else if ((typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object') {
+        options = config;
     }
 
-    _createClass$1$1(MTouch, [{
-        key: 'driveBus',
-        value: function driveBus() {
-            var _this = this;
+    this.ops = {
+        // config:
+        receiver: null,
+        operator: null,
 
-            EVENT.forEach(function (eventName) {
-                _this[eventName] = new HandlerBus(_this.receiver).add(_this.ops[eventName] || function () {});
-            });
-            this.singlePinchstart = new HandlerBus(this.receiver).add(this.ops.singlePinch.start || function () {});
-            this.singlePinch = new HandlerBus(this.receiver).add(this.ops.singlePinch.pinch || function () {});
-            this.singlePinchend = new HandlerBus(this.receiver).add(this.ops.singlePinch.end || function () {});
-            this.singleRotatestart = new HandlerBus(this.receiver).add(this.ops.singleRotate.start || function () {});
-            this.singleRotate = new HandlerBus(this.receiver).add(this.ops.singleRotate.rotate || function () {});
-            this.singleRotatend = new HandlerBus(this.receiver).add(this.ops.singleRotate.end || function () {});
+        // event
+        touchstart: function touchstart() {},
+        touchmove: function touchmove() {},
+        touchend: function touchend() {},
+        drag: function drag() {},
+        dragstart: function dragstart() {},
+        dragend: function dragend() {},
+        pinch: function pinch() {},
+        pinchstart: function pinchstart() {},
+        pinchend: function pinchend() {},
+        rotate: function rotate() {},
+        rotatestart: function rotatestart() {},
+        rotatend: function rotatend() {},
+
+        singlePinch: {
+            start: function start() {},
+            pinch: function pinch() {},
+            end: function end() {},
+
+            buttonId: null
+        },
+
+        singleRotate: {
+            start: function start() {},
+            rotate: function rotate() {},
+            end: function end() {},
+
+            buttonId: null
         }
-    }, {
-        key: 'bind',
-        value: function bind() {
-            var _this2 = this;
+    };
 
-            ['touchstart', 'touchmove', 'touchend', 'touchcancel'].forEach(function (evName) {
-                var fn = evName == 'touchcancel' ? 'end' : evName.replace('touch', '');
-                _this2.receiver.addEventListener(evName, _this2[fn].bind(_this2), false);
-            });
+    // 开关；
+    this.use = {
+        drag: !!options.drag || !!options.dragstart || !!options.dragend,
+        pinch: !!options.pinch || !!options.pinchstart || !!options.pinchend,
+        rotate: !!options.rotate || !!options.rotatestart || !!options.rotateend,
+        singlePinch: !!options.singlePinch && !!options.singlePinch.buttonId,
+        singleRotate: !!options.singleRotate && !!options.singleRotate.buttonId
+    };
+
+    this.ops = _.extend(this.ops, options);
+
+    // receiver test;
+    if (!this.ops.receiver || typeof this.ops.receiver !== 'string') {
+        console.error('receiver error,there must be a receiver-selector');
+        return;
+    }
+    // 事件接收器；
+    this.receiver = document.querySelector(this.ops.receiver);
+
+    // 事件操纵器；
+    if (this.ops.operator) {
+        if (typeof this.ops.operator !== 'string') {
+            console.error('operator error, the operator param must be a selector');
+            return;
         }
-    }, {
-        key: 'start',
-        value: function start(ev) {
-            if (!ev.touches || ev.type !== 'touchstart') return;
+        this.operator = document.querySelector(this.ops.operator);
+    } else {
+        this.operator = this.receiver;
+    }
+    // touch状态；
+    this.fingers = 0;
+    // 初始状态;
+    this.draging = this.pinching = this.rotating = this.singleRotating = this.singlePinching = false;
 
-            this.fingers = ev.touches.length;
-            this.startPoint = _.getPoint(ev, 0);
-            this.singleBasePoint = _.getBasePoint(this.operator);
+    this.startScale = 1;
+    this.startPoint = {};
+    this.secondPoint = {};
+    this.pinchStartLength = null;
+    this.singlePinchStartLength = null;
+    this.vector1 = {};
+    this.singleBasePoint = {};
+    // eventbus
+    this.driveBus();
+    this.bind();
+}
 
-            if (this.fingers > 1) {
-                this.secondPoint = _.getPoint(ev, 1);
-                this.vector1 = _.getVector(this.secondPoint, this.startPoint);
-                this.pinchStartLength = _.getLength(this.vector1);
-            } else if (this.use.singlePinch) {
-                var pinchV1 = _.getVector(this.startPoint, this.singleBasePoint);
-                this.singlePinchStartLength = _.getLength(pinchV1);
-            }
+MTouch.prototype.driveBus = function () {
+    var _this = this;
 
-            this.touchstart.fire({
-                origin: ev,
-                eventType: 'touchstart'
-            });
-        }
-    }, {
-        key: 'move',
-        value: function move(ev) {
-            if (!ev.touches || ev.type !== 'touchmove') return;
-            var curPoint = _.getPoint(ev, 0);
-            var curFingers = ev.touches.length;
-            var rotateV1 = void 0,
-                rotateV2 = void 0,
-                pinchV2 = void 0,
-                pinchLength = void 0,
-                singlePinchLength = void 0;
+    EVENT.forEach(function (eventName) {
+        _this[eventName] = new HandlerBus(_this.receiver).add(_this.ops[eventName] || function () {});
+    });
+    this.singlePinchstart = new HandlerBus(this.receiver).add(this.ops.singlePinch.start || function () {});
+    this.singlePinch = new HandlerBus(this.receiver).add(this.ops.singlePinch.pinch || function () {});
+    this.singlePinchend = new HandlerBus(this.receiver).add(this.ops.singlePinch.end || function () {});
+    this.singleRotatestart = new HandlerBus(this.receiver).add(this.ops.singleRotate.start || function () {});
+    this.singleRotate = new HandlerBus(this.receiver).add(this.ops.singleRotate.rotate || function () {});
+    this.singleRotatend = new HandlerBus(this.receiver).add(this.ops.singleRotate.end || function () {});
+};
 
-            // 当从原先的两指到一指的时候，可能会出现基础手指的变化，导致跳动；
-            // 因此需屏蔽掉一次错误的touchmove事件，待重新设置基础指后，再继续进行；
-            if (curFingers < this.fingers) {
-                this.startPoint = curPoint;
-                this.fingers = curFingers;
-                return;
-            }
+MTouch.prototype.bind = function () {
+    var _this2 = this;
 
-            // 两指先后触摸时，只会触发第一指一次touchstart，第二指不会再次触发touchstart；
-            // 因此会出现没有记录第二指状态，需要在touchmove中重新获取参数；
-            if (curFingers > 1 && (!this.secondPoint || !this.vector1 || !this.pinchStartLength)) {
-                this.secondPoint = _.getPoint(ev, 1);
-                this.vector1 = _.getVector(this.secondPoint, this.startPoint);
-                this.pinchStartLength = _.getLength(this.vector1);
-            }
+    ORIGINEVENT.forEach(function (evName) {
+        var fn = evName == 'touchcancel' ? 'end' : evName.replace('touch', '');
+        // 需要存下 bind(this) 后的函数指向，用于 destroy;
+        _this2[fn + '_bind'] = _this2[fn].bind(_this2);
+        _this2.receiver.addEventListener(evName, _this2[fn + '_bind'], false);
+    });
+};
+MTouch.prototype.destroy = function () {
+    var _this3 = this;
 
-            // 双指时，需触发pinch和rotate事件；
-            if (curFingers > 1) {
-                var curSecPoint = _.getPoint(ev, 1);
-                var vector2 = _.getVector(curSecPoint, curPoint);
-                // pinch
-                if (this.use.pinch) {
-                    pinchLength = _.getLength(vector2);
-                    this.eventFire('pinch', {
-                        delta: {
-                            scale: pinchLength / this.pinchStartLength
-                        },
-                        origin: ev
-                    });
-                    this.pinchStartLength = pinchLength;
-                }
-                // rotate
-                if (this.use.rotate) {
-                    this.eventFire('rotate', {
-                        delta: {
-                            rotate: _.getAngle(this.vector1, vector2)
-                        },
-                        origin: ev
-                    });
-                    this.vector1 = vector2;
-                }
-            } else {
-                // singlePinch;
-                if (this.use.singlePinch && ev.target.id == this.ops.singlePinch.buttonId) {
-                    pinchV2 = _.getVector(curPoint, this.singleBasePoint);
-                    singlePinchLength = _.getLength(pinchV2);
-                    this.eventFire('singlePinch', {
-                        delta: {
-                            scale: singlePinchLength / this.singlePinchStartLength
-                        },
-                        origin: ev
-                    });
-                    this.singlePinchStartLength = singlePinchLength;
-                }
-                // singleRotate;
-                if (this.use.singleRotate && ev.target.id == this.ops.singleRotate.buttonId) {
-                    rotateV1 = _.getVector(this.startPoint, this.singleBasePoint);
-                    rotateV2 = _.getVector(curPoint, this.singleBasePoint);
-                    this.eventFire('singleRotate', {
-                        delta: {
-                            rotate: _.getAngle(rotateV1, rotateV2)
-                        },
-                        origin: ev
-                    });
-                }
-            }
-            if (this.use.drag) {
-                if (ev.target.id !== this.ops.singlePinch.buttonId && ev.target.id !== this.ops.singleRotate.buttonId) {
-                    this.eventFire('drag', {
-                        delta: {
-                            deltaX: curPoint.x - this.startPoint.x,
-                            deltaY: curPoint.y - this.startPoint.y
-                        },
-                        origin: ev
-                    });
-                }
-            }
-            this.startPoint = curPoint;
-            this.touchmove.fire({
-                eventType: 'touchmove',
+    ORIGINEVENT.forEach(function (evName) {
+        var fn = evName == 'touchcancel' ? 'end' : evName.replace('touch', '');
+        _this3.receiver.removeEventListener(evName, _this3[fn + '_bind'], false);
+    });
+};
+MTouch.prototype.start = function (ev) {
+    if (!ev.touches || ev.type !== 'touchstart') return;
+
+    this.fingers = ev.touches.length;
+    this.startPoint = _.getPoint(ev, 0);
+    this.singleBasePoint = _.getBasePoint(this.operator);
+
+    if (this.fingers > 1) {
+        this.secondPoint = _.getPoint(ev, 1);
+        this.vector1 = _.getVector(this.secondPoint, this.startPoint);
+        this.pinchStartLength = _.getLength(this.vector1);
+    } else if (this.use.singlePinch) {
+        var pinchV1 = _.getVector(this.startPoint, this.singleBasePoint);
+        this.singlePinchStartLength = _.getLength(pinchV1);
+    }
+
+    this.touchstart.fire({ origin: ev, eventType: 'touchstart' });
+};
+MTouch.prototype.move = function (ev) {
+    if (!ev.touches || ev.type !== 'touchmove') return;
+    var curPoint = _.getPoint(ev, 0),
+        curFingers = ev.touches.length,
+        rotateV1 = void 0,
+        rotateV2 = void 0,
+        pinchV2 = void 0,
+        pinchLength = void 0,
+        singlePinchLength = void 0;
+
+    // 当从原先的两指到一指的时候，可能会出现基础手指的变化，导致跳动；
+    // 因此需屏蔽掉一次错误的touchmove事件，待重新设置基础指后，再继续进行；
+    if (curFingers < this.fingers) {
+        this.startPoint = curPoint;
+        this.fingers = curFingers;
+        return;
+    }
+
+    // 两指先后触摸时，只会触发第一指一次touchstart，第二指不会再次触发touchstart；
+    // 因此会出现没有记录第二指状态，需要在touchmove中重新获取参数；
+    if (curFingers > 1 && (!this.secondPoint || !this.vector1 || !this.pinchStartLength)) {
+        this.secondPoint = _.getPoint(ev, 1);
+        this.vector1 = _.getVector(this.secondPoint, this.startPoint);
+        this.pinchStartLength = _.getLength(this.vector1);
+    }
+
+    // 双指时，需触发pinch和rotate事件；
+    if (curFingers > 1) {
+        var curSecPoint = _.getPoint(ev, 1),
+            vector2 = _.getVector(curSecPoint, curPoint);
+        // pinch
+        if (this.use.pinch) {
+            pinchLength = _.getLength(vector2);
+            this.eventFire('pinch', {
+                delta: {
+                    scale: pinchLength / this.pinchStartLength
+                },
                 origin: ev
             });
-            ev.preventDefault();
+            this.pinchStartLength = pinchLength;
         }
-    }, {
-        key: 'end',
-        value: function end(ev) {
-            var _this3 = this;
-
-            if (!ev.touches && ev.type !== 'touchend' && ev.type !== 'touchcancel') return;
-
-            ['pinch', 'drag', 'rotate', 'singleRotate', 'singlePinch'].forEach(function (evName) {
-                _this3.eventEnd(evName, {
-                    origin: ev
-                });
+        // rotate
+        if (this.use.rotate) {
+            this.eventFire('rotate', {
+                delta: {
+                    rotate: _.getAngle(this.vector1, vector2)
+                },
+                origin: ev
             });
-            this.touchend.fire({
-                eventType: 'touchend',
+            this.vector1 = vector2;
+        }
+    } else {
+        // singlePinch;
+        if (this.use.singlePinch && ev.target.id == this.ops.singlePinch.buttonId) {
+            pinchV2 = _.getVector(curPoint, this.singleBasePoint);
+            singlePinchLength = _.getLength(pinchV2);
+            this.eventFire('singlePinch', {
+                delta: {
+                    scale: singlePinchLength / this.singlePinchStartLength
+                },
+                origin: ev
+            });
+            this.singlePinchStartLength = singlePinchLength;
+        }
+        // singleRotate;
+        if (this.use.singleRotate && ev.target.id == this.ops.singleRotate.buttonId) {
+            rotateV1 = _.getVector(this.startPoint, this.singleBasePoint);
+            rotateV2 = _.getVector(curPoint, this.singleBasePoint);
+            this.eventFire('singleRotate', {
+                delta: {
+                    rotate: _.getAngle(rotateV1, rotateV2)
+                },
                 origin: ev
             });
         }
-    }, {
-        key: 'eventFire',
-        value: function eventFire(evName, ev) {
-            var ing = evName + 'ing';
-            var start = evName + 'start';
-            if (!this[ing]) {
-                ev.eventType = start;
-                this[start].fire(ev);
-                this[ing] = true;
-            } else {
-                ev.eventType = evName;
-                this[evName].fire(ev);
-            }
+    }
+    if (this.use.drag) {
+        if (ev.target.id !== this.ops.singlePinch.buttonId && ev.target.id !== this.ops.singleRotate.buttonId) {
+            this.eventFire('drag', {
+                delta: {
+                    deltaX: curPoint.x - this.startPoint.x,
+                    deltaY: curPoint.y - this.startPoint.y
+                },
+                origin: ev
+            });
         }
-    }, {
-        key: 'eventEnd',
-        value: function eventEnd(evName, ev) {
-            var ing = evName + 'ing';
-            var end = void 0;
-            if (evName == 'rotate' || evName == 'singleRotate') {
-                end = evName + 'nd';
-            } else {
-                end = evName + 'end';
-            }
-            if (this[ing]) {
-                ev.eventType = end;
-                this[end].fire(ev);
-                this[ing] = false;
-            }
-        }
-    }, {
-        key: 'switchOperator',
-        value: function switchOperator(el) {
-            this.operator = el;
-        }
-    }, {
-        key: 'on',
-        value: function on(evName, handler) {
-            this[evName] && this[evName].add(handler);
-        }
-    }, {
-        key: 'off',
-        value: function off(evName, handler) {
-            this[evName] && this[evName].del(handler);
-        }
-    }]);
+    }
+    this.startPoint = curPoint;
+    this.touchmove.fire({ eventType: 'touchmove', origin: ev });
+    ev.preventDefault();
+};
+MTouch.prototype.end = function (ev) {
+    var _this4 = this;
 
-    return MTouch;
-}();
+    if (!ev.touches && ev.type !== 'touchend' && ev.type !== 'touchcancel') return;
+    ['pinch', 'drag', 'rotate', 'singleRotate', 'singlePinch'].forEach(function (evName) {
+        _this4.eventEnd(evName, { origin: ev });
+    });
+    this.touchend.fire({ eventType: 'touchend', origin: ev });
+};
+MTouch.prototype.eventFire = function (evName, ev) {
+    var ing = evName + 'ing';
+    var start = evName + 'start';
+    if (!this[ing]) {
+        ev.eventType = start;
+        this[start].fire(ev);
+        this[ing] = true;
+    } else {
+        ev.eventType = evName;
+        this[evName].fire(ev);
+    }
+};
+MTouch.prototype.eventEnd = function (evName, ev) {
+    var ing = evName + 'ing',
+        end = void 0;
+    if (evName == 'rotate' || evName == 'singleRotate') {
+        end = evName + 'nd';
+    } else {
+        end = evName + 'end';
+    }
+    if (this[ing]) {
+        ev.eventType = end;
+        this[end].fire(ev);
+        this[ing] = false;
+    }
+};
+MTouch.prototype.switchOperator = function (el) {
+    this.operator = el;
+};
+MTouch.prototype.on = function (evName, handler) {
+    this.use[_.getUseName(evName)] = true;
+    this[evName].add(handler);
+};
+MTouch.prototype.off = function (evName, handler) {
+    this[evName].del(handler);
+};
 
-var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//# sourceMappingURL=mtouch.es.js.map
+
+var _typeof$1$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _$1 = {
-    getLength: function getLength(v1) {
-        if (!v1) {
-            console.error('getLength error!');
-            return;
-        }
-        return Math.sqrt(v1.x * v1.x + v1.y * v1.y);
-    },
-    getAngle: function getAngle(v1, v2) {
-        if (!v1 || !v2) {
-            console.error('getAngle error!');
-            return;
-        }
-        var direction = v1.x * v2.y - v2.x * v1.y;
-        direction = direction > 0 ? 1 : -1;
-        var len1 = Math.sqrt(v1.x * v1.x + v1.y * v1.y);
-        var len2 = Math.sqrt(v2.x * v2.x + v2.y * v2.y);
-        var mr = len1 * len2;
-        if (mr === 0) return 0;
-        var dot = v1.x * v2.x + v1.y * v2.y;
-        var r = dot / mr;
-        if (r > 1) r = 1;
-        if (r < -1) r = -1;
-        return Math.acos(r) * direction * 180 / Math.PI;
-    },
-    getBasePoint: function getBasePoint(el) {
-        if (!el) {
-            console.error('getBasePoint error!');
-            return;
-        }
-        var x = el.getBoundingClientRect().left + el.getBoundingClientRect().width / 2,
-            y = el.getBoundingClientRect().top + el.getBoundingClientRect().width / 2;
-        return { x: Math.round(x), y: Math.round(y) };
-    },
+    // getLength(v1) {
+    //     if (!v1) {
+    //         console.error('getLength error!');
+    //         return;
+    //     }
+    //     return Math.sqrt(v1.x * v1.x + v1.y * v1.y);
+    // },
+    // getAngle(v1, v2) {
+    //     if (!v1 || !v2) {
+    //         console.error('getAngle error!');
+    //         return;
+    //     }
+    //     let direction = v1.x * v2.y - v2.x * v1.y;
+    //     direction = direction > 0? 1: -1;
+    //     let len1 = Math.sqrt(v1.x * v1.x + v1.y * v1.y);
+    //     let len2 = Math.sqrt(v2.x * v2.x + v2.y * v2.y);
+    //     let mr = len1 * len2;
+    //     if (mr === 0)return 0;
+    //     let dot = v1.x * v2.x + v1.y * v2.y;
+    //     let r = dot / mr;
+    //     if (r > 1)
+    //         r = 1;
+    //     if (r < -1)
+    //         r = -1;
+    //     return Math.acos(r) * direction * 180 / Math.PI;
+    // },
+    // getBasePoint(el) {
+    //     if (!el) {
+    //         console.error('getBasePoint error!');
+    //         return;
+    //     }
+    //     let x = el.getBoundingClientRect().left + el.getBoundingClientRect().width / 2,
+    //         y = el.getBoundingClientRect().top + el.getBoundingClientRect().width / 2;
+    //     return {x: Math.round(x), y: Math.round(y)};
+    // },
     setPos: function setPos(el, transform) {
         var str = JSON.stringify(transform);
         var value = 'translate3d(' + transform.x + 'px,' + transform.y + 'px,0px) scale(' + transform.scale + ') rotate(' + transform.rotate + 'deg)';
@@ -567,8 +559,8 @@ var _$1 = {
     extend: function extend(obj1, obj2) {
         for (var k in obj2) {
             if (obj2.hasOwnProperty(k)) {
-                if (_typeof$1(obj2[k]) == 'object') {
-                    if (_typeof$1(obj1[k]) !== 'object' || obj1[k] === null) {
+                if (_typeof$1$1(obj2[k]) == 'object') {
+                    if (_typeof$1$1(obj1[k]) !== 'object' || obj1[k] === null) {
                         obj1[k] = {};
                     }
                     this.extend(obj1[k], obj2[k]);
@@ -579,26 +571,27 @@ var _$1 = {
         }
         return obj1;
     },
-    getVector: function getVector(p1, p2) {
-        if (!p1 || !p2) {
-            console.error('getvector error!');
-            return;
-        }
-        return {
-            x: Math.round(p1.x - p2.x),
-            y: Math.round(p1.y - p2.y)
-        };
-    },
-    getPoint: function getPoint(ev, index) {
-        if (!ev || !ev.touches[index]) {
-            console.error('getPoint error!');
-            return;
-        }
-        return {
-            x: Math.round(ev.touches[index].pageX),
-            y: Math.round(ev.touches[index].pageY)
-        };
-    },
+
+    // getVector(p1, p2) {
+    //     if (!p1 || !p2) {
+    //         console.error('getvector error!');
+    //         return;
+    //     }
+    //     return {
+    //         x: Math.round(p1.x - p2.x),
+    //         y: Math.round(p1.y - p2.y),
+    //     };
+    // },
+    // getPoint(ev, index) {
+    //     if (!ev || !ev.touches[index]) {
+    //         console.error('getPoint error!');
+    //         return;
+    //     }
+    //     return {
+    //         x: Math.round(ev.touches[index].pageX),
+    //         y: Math.round(ev.touches[index].pageY),
+    //     };
+    // },
     getOffset: function getOffset(el) {
         el = typeof el == 'string' ? document.querySelector(el) : el;
         var offset = {};
@@ -868,9 +861,8 @@ var MGesture = function () {
         value: function switchOperator(el) {
             el = typeof el == 'string' ? document.querySelector(el) : el;
             // 转换操作元素后，也需要重置 mtouch 中的单指缩放基本点 singleBasePoint;
-            this.mtouch.switchOperator(el);
+            this.mtouch && this.mtouch.switchOperator(el);
             this.operator = el;
-            this.freeze(false);
             return this;
         }
     }, {
@@ -878,6 +870,12 @@ var MGesture = function () {
         value: function freeze(_freeze) {
             this.freezed = _freeze ? true : false;
             return this;
+        }
+    }, {
+        key: 'destory',
+        value: function destory() {
+            this.mtouch && this.mtouch.destroy();
+            this.mtouch = null;
         }
     }]);
 
@@ -918,7 +916,7 @@ $('.js-img').on('load', function () {
 $('.js-el').on('click', function (e) {
     $('.js-el').removeClass('active');
     $(this).addClass('active');
-    mgestureSticker.switchOperator(this);
+    mgestureSticker.switchOperator(this).freeze(false);
     e.stopPropagation();
 });
 

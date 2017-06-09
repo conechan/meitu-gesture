@@ -2,6 +2,8 @@
 
 > [demo](http://f2er.meitu.com/gxd/meitu-gesture/example/index.html)
 
+> [git](https://gitlab.meitu.com/npm/meitu-gesture)
+
 > [download](http://f2er.meitu.com/gxd/meitu-gesture/dist/gesture.min.js)
 
 ### 简介
@@ -49,7 +51,26 @@ EVENT = [
 
 #### 引入:
 
-##### 1.使用`import || required`直接引入;
+##### 1.直接使用公司私有npm进行引入;
+
+在shell直接使用Npm进行安装
+
+```js
+npm set registry http://npm.meitu-inc.com
+npm install @meitu/gesture --save
+
+```
+
+```js
+import Gesture from '@meitu/gesture';
+
+// 或者
+
+let Gesture = required('@meitu/gesture');
+```
+
+
+##### 2.使用`import || required`直接引入;
 
 ```js
 import Gesture from './gesture.min';
@@ -58,7 +79,7 @@ new Gesture( options );
 
 ```
 
-##### 2.直接通过`script`标签引入;
+##### 3.直接通过`script`标签引入;
 
 ```js
 <script src="gesture.min.js"></script>
@@ -116,10 +137,11 @@ new Gesture({
     // params:
     // false: 操作无限制；
 
-    // true: 开启限制，参数为 {x:0.5,y:0.5,maxScale:4,minScale:0.4};
+    // true: 开启限制，参数为
+    //  {x:0.5,y:0.5,maxScale:4,minScale:0.4};
 
     // 直接传入个限制对象
-    //  {x:0.5,y:0.5,maxScale:4,minScale:0.4};
+    //  {x:1,y:1,maxScale:3,minScale:0.2};
 
     // 'crop': 图片铺满的裁剪模式；
 
@@ -168,8 +190,18 @@ new MGesture({
 
 `gesture.freeze(Boolean)`;
 
-该用法用于冻结手势，使其暂时失效；解冻后可继续生效；
+该方法用于冻结手势，使其暂时失效；解冻后可继续生效；
 
-    ```js
-        gesture.freeze(true);
-    ```
+```js
+    gesture.freeze(true);
+```
+
+##### 3.`destory`
+
+`gesture.destory()`;
+
+该方法用于销毁事件绑定，释放内存；
+
+```js
+    gesture.destory();
+```
