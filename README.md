@@ -1,10 +1,5 @@
-# gesture.js移动端业务手势库1.0.0
+# gesture.js移动端业务手势库1.1.0
 
-> [demo](http://f2er.meitu.com/gxd/meitu-gesture/example/index.html)
-
-> [git](https://gitlab.meitu.com/npm/meitu-gesture)
-
-> [download](http://f2er.meitu.com/gxd/meitu-gesture/dist/gesture.min.js)
 
 ### 简介
 
@@ -51,26 +46,7 @@ EVENT = [
 
 #### 引入:
 
-##### 1.直接使用公司私有npm进行引入;
-
-在shell直接使用Npm进行安装
-
-```js
-npm set registry http://npm.meitu-inc.com
-npm install @meitu/gesture --save
-
-```
-
-```js
-import Gesture from '@meitu/gesture';
-
-// 或者
-
-let Gesture = required('@meitu/gesture');
-```
-
-
-##### 2.使用`import || required`直接引入;
+##### 1.使用`import || required`直接引入;
 
 ```js
 import Gesture from './gesture.min';
@@ -79,7 +55,7 @@ new Gesture( options );
 
 ```
 
-##### 3.直接通过`script`标签引入;
+##### 2.直接通过`script`标签引入;
 
 ```js
 <script src="gesture.min.js"></script>
