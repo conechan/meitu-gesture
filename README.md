@@ -1,5 +1,10 @@
-# gesture.js移动端业务手势库1.1.0
+# gesture.js移动端业务手势库1.0.0
 
+> [demo](http://f2er.meitu.com/gxd/meitu-gesture/example/index.html)
+
+> [git](https://gitlab.meitu.com/npm/meitu-gesture)
+
+> [download](http://f2er.meitu.com/gxd/meitu-gesture/dist/gesture.min.js)
 
 ### 更新文档；
 
@@ -52,7 +57,26 @@ EVENT = [
 
 #### 引入:
 
-##### 1.使用`import || required`直接引入;
+##### 1.直接使用公司私有npm进行引入;
+
+在shell直接使用Npm进行安装
+
+```js
+npm set registry http://npm.meitu-inc.com
+npm install @meitu/gesture --save
+
+```
+
+```js
+import Gesture from '@meitu/gesture';
+
+// 或者
+
+let Gesture = required('@meitu/gesture');
+```
+
+
+##### 2.使用`import || required`直接引入;
 
 ```js
 import Gesture from './gesture.min';
@@ -61,7 +85,7 @@ new Gesture( options );
 
 ```
 
-##### 2.直接通过`script`标签引入;
+##### 3.直接通过`script`标签引入;
 
 ```js
 <script src="gesture.min.js"></script>
@@ -100,6 +124,9 @@ new Gesture({
     // 开启时传入buttonId，关闭时直接传 false 或者 缺省；
 
     singlePinch: {
+        // 只能传入对应按钮的 `id` 值，不需要 `#`！！！
+        // 只能传入对应按钮的 `id` 值，不需要 `#`！！！
+        // 只能传入对应按钮的 `id` 值，不需要 `#`！！！
         buttonId: 'id'
     },
     singleRotate: {
@@ -154,7 +181,35 @@ new MGesture({
 ```
 
 
-#### API；
+#### 属性：
+
+##### 1.`gesture.mtouch`
+
+存放着对应的 `mtouch` 模块；
+
+##### 2.`gesture.operator`
+
+操作元素的`dom`节点；
+
+##### 3.`gesture.operatorStatus`
+
+记录着操作元素的初始化状态；
+
+##### 4.`gesture.receiver`
+
+接收事件的容器的`dom`节点；
+
+##### 5.`gesture.receiverStatus`
+
+记录着接收元素的初始化状态，包括`width,height,top,right,bottom,left`;
+
+##### 6.`gesture.transform`
+
+记录着操作元素当前的运动状态；
+
+
+
+#### API：
 
 ##### 1.`switchOperator`
 
