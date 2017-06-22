@@ -1,10 +1,10 @@
 {
   "name": "@meitu/gesture",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "基于mtouch上封装的业务逻辑操作",
   "main": "dist/gesture.js",
   "module": "dist/gesture.es.js",
-  "moduleName": "gesture",
+  "moduleName": "Gesture",
   "scripts": {
     "test": "mocha test/index.js",
     "start": "cd example && http-server",
